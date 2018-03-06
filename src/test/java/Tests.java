@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 import org.junit.*;
 
 import junit.framework.TestCase;
@@ -63,21 +61,44 @@ public class Tests extends TestCase {
   }
 
   @Test
-  public void testShoppingCart() {
-    ShoppingCart shoppingCart = new ShoppingCart("Pen", 1, "$2.00");
+  public void testShoppingCart() { 
+    ShoppingCart shoppingCart = new ShoppingCart();
+    
+    // Try getting items before adding anything to cart
+    assertEquals("[]", shoppingCart.getItems().toString());
+    
+    // Add some items
+    Item item1 = new Item("Book", 1, "$1.00");
+    Item item2 = new Item("Pen", 1, "$2.0");
+    
+    shoppingCart.addToCart(item1);
+    shoppingCart.addToCart(item2);
+    
+    shoppingCart.removeFromCart(item1);    
+    // Removing same element again shouldn't cause an error
+    shoppingCart.removeFromCart(item1);
+    
+    shoppingCart.removeFromCart(item2);
+    
+    assertEquals(0, shoppingCart.getItems().size());
+  }
+  
+  @Test
+  public void testItem() {
+    Item item = new Item("Pen", 1, "$2.00");
 
     // Base Case
-    assertEquals("Pen", shoppingCart.getProductName());
-    assertEquals(1, shoppingCart.getQuantity());
-    assertEquals("2.00", shoppingCart.getPrice().toPlainString());
+    assertEquals("Pen", item.getName());
+    assertEquals(1, item.getQuantity());
+    assertEquals("2.00", item.getPrice().toPlainString());
     
     // Edge Cases
     boolean thrown = false;
     try {
-      new ShoppingCart("Book", 0, "$1.00");
-      new ShoppingCart(null, 1, "$1.00");
-      new ShoppingCart("", 1, "$1.00");
-      new ShoppingCart("Book", 1, "$-100");
+      new Item("Book", 0, "$1.00");
+      new Item(null, 1, "$1.00");
+      new Item("", 1, "$1.00");
+      new Item("Book", 1, "$-100");
     }
     catch(IllegalArgumentException n) {
       thrown = true;
@@ -87,10 +108,10 @@ public class Tests extends TestCase {
     // Setting invalid values
     thrown = false;
     try {
-      shoppingCart.setQuantity(-1);
-      shoppingCart.setProductName(null);
-      shoppingCart.setProductName("");
-      shoppingCart.setPrice("$-1");
+      item.setQuantity(-1);
+      item.setName(null);
+      item.setName("");
+      item.setPrice("$-1");
     }
     catch(IllegalArgumentException n) {
       thrown = true;
@@ -102,18 +123,19 @@ public class Tests extends TestCase {
   @Test
   public void testDiscountSum() {
     Solution solution = new Solution();
-    ArrayList<ShoppingCart> shoppingCart = new ArrayList<ShoppingCart>();
+    
+    ShoppingCart shoppingCart = new ShoppingCart();
 
-    shoppingCart.add(new ShoppingCart("Book", 1, "$1.00"));
-    shoppingCart.add(new ShoppingCart("Pen", 1, "$2.0"));
+    shoppingCart.addToCart(new Item("Book", 1, "$1.00"));
+    shoppingCart.addToCart(new Item("Pen", 1, "$2.0"));
 
     // Base Case
     assertEquals("$2.96", solution.discountSum(shoppingCart));
        
     // Edge Case
-    shoppingCart.clear();
+    shoppingCart.getItems().clear();
+    
     assertEquals("$0.00", solution.discountSum(shoppingCart));
-     
   }
 
   public static void main(String[] args) {

@@ -1,13 +1,13 @@
 import java.math.BigDecimal;
 
-public class ShoppingCart {
-  
-  private String productName;
+public class Item {
+
+  private String name;
   private int quantity;
   private BigDecimal price;
   
-  public ShoppingCart(String productName, int quantity, String price) {
-    if (productName == null || productName.equals("")) {
+  public Item(String name, int quantity, String price) {
+    if (name == null || name.equals("")) {
       throw new IllegalArgumentException("Product Name Cannot Be Empty.");
     }
     if (quantity <= 0) {
@@ -18,20 +18,20 @@ public class ShoppingCart {
       throw new IllegalArgumentException("Price should be greater than 0.");
     }
     
-    this.productName = productName;
+    this.name = name;
     this.quantity = quantity;
     this.price = new BigDecimal(price);
   }
   
-  public String getProductName() {
-    return productName;
+  public String getName() {
+    return name;
   }
   
-  public void setProductName(String productName) {
-    if (productName == null || productName.equals("")) {
+  public void setName(String name) {
+    if (name == null || name.equals("")) {
       throw new IllegalArgumentException("Product Name Cannot Be Empty.");
     }
-    this.productName = productName;
+    this.name = name;
   }
 
   public int getQuantity() {
@@ -56,6 +56,5 @@ public class ShoppingCart {
     }
     this.price = new BigDecimal(price);
   }
-  
   
 }
