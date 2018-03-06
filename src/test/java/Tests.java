@@ -1,10 +1,8 @@
+import static org.junit.Assert.*;
+
 import org.junit.*;
 
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
-public class Tests extends TestCase {
+public class Tests {
 
   @Test
   public void testEncode() {
@@ -138,9 +136,4 @@ public class Tests extends TestCase {
     assertEquals("$0.00", solution.discountSum(shoppingCart));
   }
 
-  public static void main(String[] args) {
-    TestSuite suite = new TestSuite();
-    suite.addTestSuite(Tests.class);
-    TestRunner.run(suite);
-  }
 }
